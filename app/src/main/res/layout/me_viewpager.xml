@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="ui.myhome.ScrollingActivity"
+    tools:showIn="@layout/me_activity_scrolling"
+    android:orientation="vertical">
+
+    <include layout="@layout/me_tab"/>
+
+    <ImageView
+        android:id="@+id/line_tab"
+        android:layout_width="100dp"
+        android:layout_height="1dp"
+        android:background="#6E0000FF" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <!--<android.support.v4.view.PagerTabStrip
+        android:id="@+id/pagertabstrip"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp">
+
+    </android.support.v4.view.PagerTabStrip>-->
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

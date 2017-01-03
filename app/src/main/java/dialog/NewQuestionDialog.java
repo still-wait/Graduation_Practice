@@ -14,13 +14,6 @@ import android.widget.EditText;
 import com.example.ygh.graduation_practice.R;
 import com.jude.utils.JUtils;
 
-import network.RestApi;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import storage.CurrentUser;
-import transfer.InformationTransfer;
-
 public class NewQuestionDialog extends DialogFragment {
 
     private EditText titleEditText;
@@ -77,24 +70,24 @@ public class NewQuestionDialog extends DialogFragment {
             JUtils.Toast(getResources().getString(R.string.title_cannot_be_empty));
             return;
         }
-        Call<InformationTransfer> commitQuestionCall = RestApi.getHaruueKnowWebApiService().question(CurrentUser.getInstance().token, title, content);
-        commitQuestionCall.enqueue(new Callback<InformationTransfer>() {
-            @Override
-            public void onResponse(Response<InformationTransfer> response) {
-                if (response.code() == 200) {
-                    JUtils.Toast(getResources().getString(R.string.commit_question_success));
-                    getDialog().dismiss();
-                    ((NewQuestionDialogCreater) getActivity()).getNewQuestionDialogListener().onSuccess();
-                } else {
-                    JUtils.Toast(getResources().getString(R.string.fail_please_retry));
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                JUtils.Toast(getResources().getString(R.string.network_error));
-            }
-        });
+//        Call<InformationTransfer> commitQuestionCall = RestApi.getHaruueKnowWebApiService().question(CurrentUser.getInstance().token, title, content);
+//        commitQuestionCall.enqueue(new Callback<InformationTransfer>() {
+//            @Override
+//            public void onResponse(Response<InformationTransfer> response) {
+//                if (response.code() == 200) {
+//                    JUtils.Toast(getResources().getString(R.string.commit_question_success));
+//                    getDialog().dismiss();
+//                    ((NewQuestionDialogCreater) getActivity()).getNewQuestionDialogListener().onSuccess();
+//                } else {
+//                    JUtils.Toast(getResources().getString(R.string.fail_please_retry));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                JUtils.Toast(getResources().getString(R.string.network_error));
+//            }
+//        });
     }
 
     @Override

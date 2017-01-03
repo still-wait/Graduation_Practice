@@ -20,10 +20,10 @@
             android:paddingRight="20dp">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_question_title"
+                android:id="@+id/input_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/title"
+                android:hint="姓名"
                 app:hintAnimationEnabled="true">
 
                 <EditText
@@ -35,10 +35,10 @@
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_question_content"
+                android:id="@+id/input_sex"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/match_content"
+                android:hint="性别"
                 app:hintAnimationEnabled="true">
 
                 <EditText
@@ -49,10 +49,10 @@
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_time"
+                android:id="@+id/input_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="约球时间"
+                android:hint="年龄"
                 app:hintAnimationEnabled="true">
 
                 <EditText
@@ -63,38 +63,10 @@
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_min"
+                android:id="@+id/input_tell"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="最少人数"
-                app:hintAnimationEnabled="true">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="1500"
-                    android:inputType="text|textMultiLine" />
-
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_max"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="最多人数"
-                app:hintAnimationEnabled="true">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLength="1500"
-                    android:inputType="text|textMultiLine" />
-
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="具体地点"
+                android:hint="电话"
                 app:hintAnimationEnabled="true">
 
                 <EditText

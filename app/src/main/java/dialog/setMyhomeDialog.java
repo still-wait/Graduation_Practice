@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,52 +23,50 @@ import com.example.ygh.graduation_practice.R;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import network.NormalPostRequest;
 
 import static android.content.Context.MODE_PRIVATE;
+import static network.volley.url;
 
-public class NewMatchDialog extends DialogFragment {
+public class setMyhomeDialog extends DialogFragment {
 
-    private EditText titleEditText;
-    private EditText contentEditText;
-    private EditText timeEditText;
-    private EditText minEditText;
-    private EditText maxEditText;
-    private EditText locationEditText;
+    private EditText nameEditText;
+    private EditText sexEditText;
+    private EditText ageEditText;
+    private EditText tellEditText;
     private SharedPreferences pref;
-    private String httpurl1 = "http://192.168.191.1:8080/Graduation_practic/newmatch.action";
+    private String httpurl1 = url + ":8080/Graduation_practic/updateuser.action";
     private static ProgressDialog dialog;
+
     // implements this interface if you want to create the dialog
-    public interface NewMatchDialogCreater {
-        NewMatchDialogListener getNewMatchDialogListener();
+    public interface NewMyhomeDialogCreater {
+        NewMyhomeDialogListener getNewMatchDialogListener();
     }
 
-    public interface NewMatchDialogListener {
+    public interface NewMyhomeDialogListener {
 
-        void onSuccess();
+        public void getNameAddr(String username, String sex, String age, String tell);
+
         void onCancel();
 
     }
 
+    NewMyhomeDialogListener myhomeDialogListener = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        getDialog().setTitle(R.string.new_match);
+        getDialog().setTitle("修改");
         getDialog().setCanceledOnTouchOutside(false);
         getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        final View dialogView = inflater.inflate(R.layout.dialog_new_match, container);
-        titleEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_question_title)).getEditText();
-        contentEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_question_content)).getEditText();
-        timeEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_time)).getEditText();
-        minEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_min)).getEditText();
-        maxEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_max)).getEditText();
-        locationEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_location)).getEditText();
+        final View dialogView = inflater.inflate(R.layout.dialog_set_myhome, container);
+        nameEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_name)).getEditText();
+        sexEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_sex)).getEditText();
+        ageEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_age)).getEditText();
+        tellEditText = ((TextInputLayout) dialogView.findViewById(R.id.input_tell)).getEditText();
         onViewStateRestored(savedInstanceState);
         pref = getActivity().getSharedPreferences("user", MODE_PRIVATE);
         // Button
@@ -78,6 +75,7 @@ public class NewMatchDialog extends DialogFragment {
         return dialogView;
 
     }
+
 
     public class Listener implements View.OnClickListener {
 
@@ -96,9 +94,9 @@ public class NewMatchDialog extends DialogFragment {
     }
 
     private void onCommit() {
-        String title = titleEditText.getText().toString();
-        String content = contentEditText.getText().toString();
-        if (title.isEmpty()) {
+        String name = nameEditText.getText().toString();
+        String sex = sexEditText.getText().toString();
+        if (name.isEmpty()) {
             Toast.makeText(getActivity(), "标题不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -126,28 +124,28 @@ public class NewMatchDialog extends DialogFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("title", titleEditText.getText().toString());
-        outState.putString("content", contentEditText.getText().toString());
+        outState.putString("title", nameEditText.getText().toString());
+        outState.putString("content", sexEditText.getText().toString());
     }
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         if (null != savedInstanceState) {
-            titleEditText.setText(savedInstanceState.getString("title"));
-            contentEditText.setText(savedInstanceState.getString("content"));
+            nameEditText.setText(savedInstanceState.getString("title"));
+            sexEditText.setText(savedInstanceState.getString("content"));
         }
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        ((NewMatchDialogCreater) getActivity()).getNewMatchDialogListener().onCancel();
+        ((NewMyhomeDialogCreater) getActivity()).getNewMatchDialogListener().onCancel();
     }
 
 
     /**
-     *访问网络
+     * 访问网络
      */
     private void onnewDialogMatch() {
         /**
@@ -161,21 +159,12 @@ public class NewMatchDialog extends DialogFragment {
         dialog.setCancelable(false);
         dialog.show();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("username", pref.getString("username","tom"));
-        // 获取系统时间
-        String currentTime = DateFormat.format(
-                "yyyy-MM-dd hh:mm:ss", new Date()).toString();
-        SimpleDateFormat sdf = new SimpleDateFormat(
-                "yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-        currentTime = sdf.format(new Date());
+        params.put("username", pref.getString("username", "tom"));
+        params.put("name", nameEditText.getText().toString());
+        params.put("sex", sexEditText.getText().toString());
+        params.put("age", ageEditText.getText().toString());
+        params.put("tellphone", tellEditText.getText().toString());
 
-        params.put("ftime",currentTime);
-        params.put("time",timeEditText.getText().toString());
-        params.put("totalmin",minEditText.getText().toString());
-        params.put("totalmax",maxEditText.getText().toString());
-        params.put("location",locationEditText.getText().toString());
-        params.put("title",titleEditText.getText().toString());
-        params.put("remark",contentEditText.getText().toString());
         /**
          * 访问网络
          */
@@ -194,9 +183,10 @@ public class NewMatchDialog extends DialogFragment {
                                     dialog.cancel();
                                     dialog = null;
                                 }
+                                myhomeDialogListener.getNameAddr(nameEditText.getText().toString(), sexEditText.getText().toString(), ageEditText.getText().toString(), tellEditText.getText().toString());
 //                                position.setText(response.getString("poision"));
                                 Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
-                                NewMatchDialog.this.dismiss();
+                                setMyhomeDialog.this.dismiss();
 //                                userTransfer = response;
                             } else {
 

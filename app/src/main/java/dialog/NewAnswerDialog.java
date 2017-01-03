@@ -15,13 +15,7 @@ import android.widget.TextView;
 import com.example.ygh.graduation_practice.R;
 import com.jude.utils.JUtils;
 
-import network.RestApi;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import storage.CurrentQuestion;
-import storage.CurrentUser;
-import transfer.InformationTransfer;
 
 public class NewAnswerDialog extends DialogFragment {
 
@@ -77,24 +71,24 @@ public class NewAnswerDialog extends DialogFragment {
             JUtils.Toast(getResources().getString(R.string.answer_content_cannot_be_empty));
             return;
         }
-        Call<InformationTransfer> commitAnswerCall = RestApi.getHaruueKnowWebApiService().answer(CurrentUser.getInstance().token, CurrentQuestion.getInstance().id, content);
-        commitAnswerCall.enqueue(new Callback<InformationTransfer>() {
-            @Override
-            public void onResponse(Response<InformationTransfer> response) {
-                if (response.code() == 200) {
-                    JUtils.Toast(getResources().getString(R.string.commit_answer_success));
-                    getDialog().dismiss();
-                    ((NewAnswerDialogCreater) getActivity()).getNewAnswerDialogListener().onSuccess();
-                } else {
-                    JUtils.Toast(getResources().getString(R.string.fail_please_retry));
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-                JUtils.Toast(getResources().getString(R.string.network_error));
-            }
-        });
+//        Call<InformationTransfer> commitAnswerCall = RestApi.getHaruueKnowWebApiService().answer(CurrentUser.getInstance().token, CurrentQuestion.getInstance().id, content);
+//        commitAnswerCall.enqueue(new Callback<InformationTransfer>() {
+//            @Override
+//            public void onResponse(Response<InformationTransfer> response) {
+//                if (response.code() == 200) {
+//                    JUtils.Toast(getResources().getString(R.string.commit_answer_success));
+//                    getDialog().dismiss();
+//                    ((NewAnswerDialogCreater) getActivity()).getNewAnswerDialogListener().onSuccess();
+//                } else {
+//                    JUtils.Toast(getResources().getString(R.string.fail_please_retry));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//                JUtils.Toast(getResources().getString(R.string.network_error));
+//            }
+//        });
     }
 
     @Override

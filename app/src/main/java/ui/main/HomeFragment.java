@@ -28,6 +28,8 @@ import storage.CurrentQuestion;
 import transfer.QuestionTransfer;
 import ui.adapter.QuestionAdapter;
 
+import static network.volley.onreqAllMatch;
+
 public class HomeFragment extends Fragment implements QuestionListProvider.QuestionListDemander, MainActivity.CommitSuccessCallBack {
 
     View view;
@@ -54,6 +56,7 @@ public class HomeFragment extends Fragment implements QuestionListProvider.Quest
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setRefreshListener(new Listener());
         recyclerView.showProgress();
+        onreqAllMatch(1,getActivity());
         adapter.setError(R.layout.view_error).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -199,5 +202,7 @@ public class HomeFragment extends Fragment implements QuestionListProvider.Quest
             }, 500);
         }
     }
+
+
 
 }

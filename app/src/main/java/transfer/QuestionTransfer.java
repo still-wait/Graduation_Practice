@@ -5,11 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-import javax.annotation.Generated;
-
 import cn.com.caoyue.util.time.Time;
 
-@Generated("org.jsonschema2pojo")
 public class QuestionTransfer implements Comparable<QuestionTransfer>, Serializable {
 
     @SerializedName("id")
